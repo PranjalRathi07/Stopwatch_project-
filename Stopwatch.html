@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stopwatch</title>
+    <style>
+        body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+    background-image: url(./Copy\ of\ WE\ ARE\ HIRING\ POSTER.jpeg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    }
+
+    .stopwatch {
+        background-color: rgba(0, 0, 0, 0);
+        color: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgb(0, 0, 0);
+        text-align: center;
+    }
+
+    .display {
+        font-size: 2em;
+        margin-bottom: 20px;
+    }
+
+    .controls button {
+        font-size: 1em;
+        padding: 10px;
+        margin: 5px;
+        border: 0;
+        cursor: pointer;
+    }
+    .controls button:hover{
+        background-color: darkgrey;
+        box-sizing: border-box;
+        transition: all 0.2s ease-in-out;
+        border-radius: 5px;
+    }
+
+    .laps {
+        margin-top: 20px;
+        text-align: left;
+    }
+    </style>
+</head>
+<body>
+    <div class="stopwatch">
+        <div class="display">00:00:00</div>
+        <div class="controls">
+            <button id="start" onclick="start()">Start</button>
+            <button id="stop" onclick="stop()">Stop</button>
+            <button id="reset" onclick="reset()">Reset</button>
+            <button id="lap" onclick="lap()">Lap</button>
+        </div>
+        <div class="laps"></div>
+    </div>
+    <script>
+    var s=0,m=0,h=0
+    var timer
+
+    var display = document.querySelector('.display');
+    var laps = document.querySelector('.laps');
+
+
+    function start() {
+        if(!timer){
+            timer = setInterval(run,1000)
+        }
+    } 
+    function run(){
+        display.innerHTML = getTimer()
+        s++
+        if(s==60){
+            s=0
+            m++
+        }
+        if(m==60){
+            m=0
+            h++
+        }
+    }
+    function getTimer(){
+        return(h<10 ? "0" + h : h) + ":" + (m<10 ? "0" + m : m) + ":" + (s<10 ? "0" + s : s)
+    }
+    function stop(){
+        stopTimer()
+    }
+    function  stopTimer(){
+        clearInterval(timer)
+        timer = false
+    }
+    function reset(){
+        stopTimer()
+        s=0
+        m=0
+        h=0
+        display.innerHTML = getTimer()
+        laps.innerHTML = ""
+    }
+    function lap(){
+        if(timer){
+            var li = document.createElement("li")
+            li.innerHTML = getTimer()
+            laps.appendChild(li)
+        }
+    }
+    </script>
+</body>
+</html>
